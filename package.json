@@ -1,0 +1,19 @@
+{
+  "name": "cortana",
+  "version": "1.0.0",
+  "description": "test cortana app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aes421/Cortana.git"
+  },
+  "author": "Ashley E. Stallings",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aes421/Cortana/issues"
+  },
+  "homepage": "https://github.com/aes421/Cortana#readme"
+}
