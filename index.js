@@ -46,7 +46,7 @@ var bot = new builder.UniversalBot(connector, [
                         value = stats[i].base_stat;
                     }
                 }
-    			session.send("%s's %s : %s", data.pokemon,
+    			session.send("%s's %s is %s", data.pokemon,
                     data.stat, value.toString());
             }
         });
