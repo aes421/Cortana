@@ -28,11 +28,13 @@ var bot = new builder.UniversalBot(connector, [
 
     function (session, results) {
         session.dialogData.pokemon = results.response.toLowerCase();
+        session.say("%s", session.dialogData.pokemon);
         session.beginDialog('askForStat');
     },
 
     function (session, results) {
         session.dialogData.stat = results.response.toLowerCase();
+        session.say("%s", session.dialogData.stat);
         //for use in callback
         var data = session.dialogData;
         //do work
