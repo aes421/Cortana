@@ -22,17 +22,17 @@ var inMemoryStorage = new builder.MemoryBotStorage();
 var bot = new builder.UniversalBot(connector, [
     //waterfall to control conversation
     function (session) {
-        session.send("Welcome to Poke A.P.I.");
+        session.say("Welcome to Poke A.P.I.");
         session.beginDialog('askForPokemon');
     },
 
     function (session, results) {
-        session.dialogData.pokemon = results.response;
+        session.dialogData.pokemon = results.response.toLowerCase();
         session.beginDialog('askForStat');
     },
 
     function (session, results) {
-        session.dialogData.stat = results.response;
+        session.dialogData.stat = results.response.toLowerCase();
         //for use in callback
         var data = session.dialogData;
         //do work
@@ -46,7 +46,7 @@ var bot = new builder.UniversalBot(connector, [
                         value = stats[i].base_stat;
                     }
                 }
-    			session.send("%s's %s is %s", data.pokemon,
+    			session.say("%s's %s is %s", data.pokemon,
                     data.stat, value.toString());
             }
         });
