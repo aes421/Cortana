@@ -22,19 +22,18 @@ var inMemoryStorage = new builder.MemoryBotStorage();
 var bot = new builder.UniversalBot(connector, [
     //waterfall to control conversation
     function (session) {
-        session.say("Welcome to Poke A.P.I.");
+        session.say("Welcome"); //to Poke A.P.I.
         session.beginDialog('askForPokemon');
     },
 
     function (session, results) {
         session.dialogData.pokemon = results.response.toLowerCase();
-        session.say("%s", session.dialogData.pokemon);
         session.beginDialog('askForStat');
     },
 
     function (session, results) {
         session.dialogData.stat = results.response.toLowerCase();
-        session.say("looking up "+ session.dialogData.pokemon + "'s" + session.dialogData.stat);
+        session.say("looking up "+ session.dialogData.stat + " of " session.dialogData.pokemon);
         //for use in callback
         var data = session.dialogData;
         //do work
@@ -58,6 +57,7 @@ var bot = new builder.UniversalBot(connector, [
 
 bot.dialog('askForPokemon',[
     function(session){
+        session.say('Which pokemon?');
         builder.Prompts.text(session, 'Which pokemon?');
     },
     function(session, results){
@@ -67,6 +67,7 @@ bot.dialog('askForPokemon',[
 
 bot.dialog('askForStat',[
     function(session){
+        session.say('Which stat?');
         builder.Prompts.text(session, 'Which stat?');
     },
     function(session, results){
