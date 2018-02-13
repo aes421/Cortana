@@ -18,7 +18,6 @@ var connector = new builder.ChatConnector({
 server.post('/api/messages', connector.listen());
 
 var inMemoryStorage = new builder.MemoryBotStorage();
-// Receive messages from the user and respond by echoing each message back (prefixed with 'You said:')
 var bot = new builder.UniversalBot(connector, [
     //waterfall to control conversation
     function (session) {
@@ -33,7 +32,7 @@ var bot = new builder.UniversalBot(connector, [
 
     function (session, results) {
         session.dialogData.stat = results.response.toLowerCase();
-        session.say("looking up "+ session.dialogData.stat + " of " session.dialogData.pokemon);
+        session.say("looking up " + session.dialogData.stat + " of " + session.dialogData.pokemon);
         //for use in callback
         var data = session.dialogData;
         //do work
