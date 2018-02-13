@@ -46,8 +46,11 @@ var bot = new builder.UniversalBot(connector, [
                         value = stats[i].base_stat;
                     }
                 }
-    			session.say("%s's %s is %s", data.pokemon,
-                    data.stat, value.toString());
+    			session.say("The " + data.stat + " of " + data.pokemon + " is "
+                    value.toString());
+            }
+            else{
+                session.say("Error");
             }
         });
         session.endDialog();
@@ -56,7 +59,7 @@ var bot = new builder.UniversalBot(connector, [
 
 bot.dialog('askForPokemon',[
     function(session){
-        //session.say('Which pokemon?');
+        session.say('Which pokemon?');
         builder.Prompts.text(session, 'Which pokemon?');
     },
     function(session, results){
@@ -66,7 +69,7 @@ bot.dialog('askForPokemon',[
 
 bot.dialog('askForStat',[
     function(session){
-        //session.say('Which stat?');
+        session.say('Which stat?');
         builder.Prompts.text(session, 'Which stat?');
     },
     function(session, results){
