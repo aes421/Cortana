@@ -33,6 +33,7 @@ var bot = new builder.UniversalBot(connector, [
 
     function (session, results) {
         session.dialogData.stat = results.response.toLowerCase();
+        session.say("looking up "+ session.dialogData.pokemon + "'s" + session.dialogData.stat);
         //for use in callback
         var data = session.dialogData;
         //do work
