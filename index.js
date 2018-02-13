@@ -46,8 +46,8 @@ var bot = new builder.UniversalBot(connector, [
                         value = stats[i].base_stat;
                     }
                 }
-    			session.say("The " + data.stat + " of " + data.pokemon + " is "
-                    value.toString());
+    			session.say("The " + data.stat + " of " + data.pokemon +
+                " is " + value.toString());
             }
             else{
                 session.say("Error");
