@@ -28,6 +28,7 @@ var bot = new builder.UniversalBot(connector, [
 
     function (session, results) {
         session.dialogData.pokemon = results.response.toLowerCase();
+        session.say("%s", session.dialogData.pokemon);
         session.beginDialog('askForStat');
     },
 
