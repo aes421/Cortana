@@ -21,7 +21,7 @@ var inMemoryStorage = new builder.MemoryBotStorage();
 var bot = new builder.UniversalBot(connector, [
     //waterfall to control conversation
     function (session) {
-        session.say("Welcome"); //to Poke A.P.I.
+        session.say("Welcome", "Welcome"); //to Poke A.P.I.
         session.beginDialog('askForPokemon');
     },
 
@@ -32,7 +32,8 @@ var bot = new builder.UniversalBot(connector, [
 
     function (session, results) {
         session.dialogData.stat = results.response.toLowerCase();
-        session.say("looking up " + session.dialogData.stat + " of " + session.dialogData.pokemon);
+        var constructedString = "looking up " + session.dialogData.pokemon + "'s " + session.dialogData.stat;
+        session.say(constructedString, constructedString);
         //for use in callback
         var data = session.dialogData;
         //do work
@@ -46,11 +47,12 @@ var bot = new builder.UniversalBot(connector, [
                         value = stats[i].base_stat;
                     }
                 }
-    			session.say("The " + data.stat + " of " + data.pokemon +
-                " is " + value.toString());
+                var constructedString = "The " + data.stat + " of " + data.pokemon +
+                " is " + value.toString();
+    			session.say(constructedString, constructedString);
             }
             else{
-                session.say("Error");
+                session.say("Error", "Error");
             }
         });
         session.endDialog();
@@ -59,7 +61,7 @@ var bot = new builder.UniversalBot(connector, [
 
 bot.dialog('askForPokemon',[
     function(session){
-        session.say('Which pokemon?');
+        session.say('', 'Which pokemon?');
         builder.Prompts.text(session, 'Which pokemon?');
     },
     function(session, results){
@@ -69,7 +71,7 @@ bot.dialog('askForPokemon',[
 
 bot.dialog('askForStat',[
     function(session){
-        session.say('Which stat?');
+        session.say('', 'Which stat?');
         builder.Prompts.text(session, 'Which stat?');
     },
     function(session, results){
