@@ -38,7 +38,9 @@ var bot = new builder.UniversalBot(connector, [
         var data = session.dialogData;
         //do work
         var endpoint = 'https://pokeapi.co/api/v2/pokemon/' + session.dialogData.pokemon;
+        session.say("before request", "before request");
         request(endpoint, function(err, resp, body){
+            session.say("in request", "in request");
             if(!err && resp.statusCode == 200){
                 var stats = JSON.parse(body).stats;
                 var value = 0;
@@ -54,8 +56,9 @@ var bot = new builder.UniversalBot(connector, [
             else{
                 session.say("Error", "Error");
             }
+
+            session.endDialog();
         });
-        session.endDialog();
     }
 ]).set('storage', inMemoryStorage); //not sure how to use this yet
 
