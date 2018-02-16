@@ -20,43 +20,48 @@ server.post('/api/messages', connector.listen());
 var inMemoryStorage = new builder.MemoryBotStorage();
 var bot = new builder.UniversalBot(connector, [
     //waterfall to control conversation
-    function (session) {
-        session.say("Welcome", "Welcome"); //to Poke A.P.I.
-        session.beginDialog('askForPokemon');
-    },
-
-    function (session, results) {
-        session.dialogData.pokemon = results.response.toLowerCase();
-        session.beginDialog('askForStat');
-    },
-
-    function (session, results) {
-        session.dialogData.stat = results.response.toLowerCase();
-        var constructedString = "looking up " + session.dialogData.pokemon + "'s " + session.dialogData.stat;
-        session.say(constructedString, constructedString);
-        //for use in callback
-        var data = session.dialogData;
-        //do work
-        var endpoint = 'https://pokeapi.co/api/v2/pokemon/' + session.dialogData.pokemon;
+    // function (session) {
+    //     session.say("Welcome", "Welcome"); //to Poke A.P.I.
+    //     session.beginDialog('askForPokemon');
+    // },
+    //
+    // function (session, results) {
+    //     session.dialogData.pokemon = results.response.toLowerCase();
+    //     session.beginDialog('askForStat');
+    // },
+    //
+    // function (session, results) {
+    function(session){
+        // session.dialogData.stat = results.response.toLowerCase();
+        // var constructedString = "looking up " + session.dialogData.pokemon + "'s " + session.dialogData.stat;
+        // session.say(constructedString, constructedString);
+        // //for use in callback
+        // var data = session.dialogData;
+        // //do work
+        // var endpoint = 'https://pokeapi.co/api/v2/pokemon/' + session.dialogData.pokemon;
         session.say("before request", "before request");
-        request(endpoint, function(err, resp, body){
+        request("http://api.open-notify.org/astros", function(err, resp, body){
             session.say("in request", "in request");
             if(!err && resp.statusCode == 200){
-                var stats = JSON.parse(body).stats;
-                var value = 0;
-                for (var i = 0; i < stats.length; i++){
-                    if (stats[i].stat.name === data.stat){
-                        value = stats[i].base_stat;
-                    }
-                }
-                var constructedString = "The " + data.stat + " of " + data.pokemon +
-                " is " + value.toString();
-    			session.say(constructedString, constructedString);
+                session.say("Success", "Success");
+                var num = JSON.parse(body).number;
+                session.say(num.toString(), num.toString());
+            //     var stats = JSON.parse(body).stats;
+            //     var value = 0;
+            //     for (var i = 0; i < stats.length; i++){
+            //         if (stats[i].stat.name === data.stat){
+            //             value = stats[i].base_stat;
+            //         }
+            //     }
+            //     var constructedString = "The " + data.stat + " of " + data.pokemon +
+            //     " is " + value.toString();
+    		// 	session.say(constructedString, constructedString);
             }
             else{
-                session.say("Error", "Error");
+                 session.say("Error", "Error");
             }
 
+            session.say("after request", "after request");
             session.endDialog();
         });
     }
