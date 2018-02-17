@@ -4,15 +4,20 @@ const fs = require('fs');
 const express = require('express');
 
 const app = express();
+const server = http.createServer(app);
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
 app.get('/', serveDefaultHTML);
 app.get('/OAuthTest.html', serveAuthHTML);
-app.get("/Authenticate.js?", redirecting);
+app.post("/Authenticate.js", function(req, res){
+	console.log("Here");
+	redirecting(req, res);
+	});
 
-app.listen(8080, function(){
+
+server.listen(8080, function(){
     console.log("Listening on http://localhost:8080");
 });
 
