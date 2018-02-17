@@ -1,21 +1,20 @@
 const http = require('http');
 const request = require('request');
 const fs = require('fs');
+const express = require('express');
+
+const app = express();
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
-const server = http.createServer(function (req, res){
-    if (req.url === "/OAuthTest.html"){
-        serveAuthHTML(req, res);
-    }
-    else if (req.url === "/Authenticate.js?"){
-        redirecting(req, res);
-    }
-    else{
-        serveDefaultHTML(req, res);
-    }
-}).listen(8080);
+app.get('/', serveDefaultHTML);
+app.get('/OAuthTest.html', serveAuthHTML);
+app.get("/Authenticate.js?", redirecting);
+
+app.listen(8080, function(){
+    console.log("Listening on http://localhost:8080");
+});
 
 function serveAuthHTML(req, res){
     fs.readFile("OAuthTest.html", function(err, data){
