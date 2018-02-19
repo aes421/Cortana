@@ -1,50 +1,16 @@
-const http = require('http');
-const request = require('request');
-const fs = require('fs');
 const express = require('express');
+const path = require('path');
+
 
 const app = express();
-const server = http.createServer(app);
 
-const CLIENT_ID = process.env.CLIENT_ID;
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
+// Routes
+app.use('/api/reddit', require('./api/reddit'));
 
-app.get('/', serveDefaultHTML);
-app.get('/OAuthTest.html', serveAuthHTML);
-app.post("/Authenticate.js", function(req, res){
-	console.log("Here");
-	redirecting(req, res);
-	});
-
-
-server.listen(8080, function(){
-    console.log("Listening on http://localhost:8080");
+app.get('/', function(req, res) {
+  res.status(200).sendFile(path.join(__dirname, 'OAuthTest.html'));
 });
 
-function serveAuthHTML(req, res){
-    fs.readFile("OAuthTest.html", function(err, data){
-        if (err){
-            res.writeHead(404, {'Content-Type': 'text/html'});
-            res.end(err);
-            return;
-        }
-        res.writeHead(200, {'Content-Type': 'text/html'});
-        res.end(data);
-    });
-}
-
-function serveDefaultHTML(req, res){
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.write("Welcome to my server!")
-    res.end("Request url: " + req.url);
-}
-
-function redirecting(req, res){
-    // res.writeHead(200, {'Content-Type': 'text/html'});
-    // res.write("Redirecting");
-    console.log("Redirecting");
-    res.writeHead(301,
-        {Location: 'http://www.google.com'}
-    );
-    res.end();
-}
+app.listen(8080, function(){
+    console.log("Listening on port 8080");
+});
